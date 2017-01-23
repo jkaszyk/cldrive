@@ -64,7 +64,12 @@ std::ostream& operator<<(std::ostream& stream, const CsvLog& log) {
   NullIfNegative(stream, log.work_item_local_mem_size_) << ",";
   NullIfNegative(stream, log.work_item_private_mem_size_) << ",";
   NullIfZero(stream, log.global_size_) << ",";
-  NullIfZero(stream, log.local_size_) << "," << log.outcome_ << ",";
+  NullIfZero(stream, log.global_size_y_) << ",";
+  NullIfZero(stream, log.global_size_z_) << ",";
+  NullIfZero(stream, log.local_size_) << ",";
+  NullIfZero(stream, log.local_size_y_) << ",";
+  NullIfZero(stream, log.local_size_z_) << ",";
+  stream << log.outcome_ << ",";
   NullIfZero(stream, log.transferred_bytes_) << ",";
   NullIfZero(stream, log.runtime_ms_) << std::endl;
   return stream;
@@ -102,7 +107,11 @@ std::ostream& operator<<(std::ostream& stream, const CsvLog& log) {
       if (log) {
         csv.outcome_ = "PASS";
         csv.global_size_ = log->global_size();
+	csv.global_size_y_ = log->global_size_y();
+	csv.global_size_z_ = log->global_size_z();
         csv.local_size_ = log->local_size();
+	csv.local_size_y_ = log->local_size_y();
+	csv.local_size_z_ = log->local_size_z();
         csv.runtime_ms_ = log->runtime_ms();
         csv.transferred_bytes_ = log->transferred_bytes();
       }

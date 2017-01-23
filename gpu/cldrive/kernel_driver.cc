@@ -182,16 +182,26 @@ gpu::libcecl::OpenClKernelInvocation KernelDriver::RunOnceOrDie(
   size_t global_size = dynamic_params.global_size_x();
   size_t local_size = dynamic_params.local_size_x();
 
+  size_t global_size_y = dynamic_params.global_size_y();
+  size_t local_size_y = dynamic_params.local_size_y();
+  
+  size_t global_size_z = dynamic_params.global_size_z();
+  size_t local_size_z = dynamic_params.local_size_z();
+
   log.set_global_size(global_size);
   log.set_local_size(local_size);
+  log.set_local_size_y(local_size_y);
+  log.set_local_size_z(local_size_z);
+  log.set_global_size_y(global_size_y);
+  log.set_global_size_z(global_size_z);
   log.set_kernel_name(name_);
 
   inputs.CopyToDevice(queue_, &profiling);
   inputs.SetAsArgs(&kernel_);
 
   queue_.enqueueNDRangeKernel(kernel_, /*offset=*/cl::NullRange,
-                              /*global=*/cl::NDRange(global_size),
-                              /*local=*/cl::NDRange(local_size),
+                              /*global=*/cl::NDRange(global_size,global_size_y,global_size_z),
+                              /*local=*/cl::NDRange(local_size,local_size_y,local_size_z),
                               /*events=*/nullptr, /*event=*/&event);
   profiling.elapsed_nanoseconds += GetElapsedNanoseconds(event);
 

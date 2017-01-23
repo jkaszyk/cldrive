@@ -40,4 +40,9 @@ message OpenClKernelInvocation {
   required int64 local_size = 3;
   required double runtime_ms = 4;
   required int64 transferred_bytes = 5;
+
+  required int64 global_size_y = 6;
+  required int64 global_size_z = 7;
+  required int64 local_size_y = 8;
+  required int64 local_size_z = 9;
 }

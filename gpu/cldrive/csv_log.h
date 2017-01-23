@@ -84,11 +84,15 @@ class CsvLog {
   // From CldriveInstance.dynamic_params.global_size_x field. If
   // CldriveInstance.outcome != PASS, this will be empty.
   int global_size_;
-
+  int global_size_y_;
+  int global_size_z_;
+  
   // From CldriveInstance.dynamic_params.local_size_x field. If
   // CldriveInstance.outcome != PASS, this will be empty.
   int local_size_;
-
+  int local_size_y_;
+  int local_size_z_;
+  
   // A stringified enum value. Either CldriveInstance.outcome if
   // CldriveInstance.outcome != PASS, else CldriveKernelInstance.outcome if
   // CldriveKernelInstance.outcome != PASS, else CldriveKernelRun.outcome.

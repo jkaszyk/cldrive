@@ -111,11 +111,21 @@ static bool ValidateOutputFormat(const char* flagname, const string& value) {
 }
 DEFINE_validator(output_format, &ValidateOutputFormat);
 
-DEFINE_int32(gsize, 1024,
+DEFINE_int32(gsize_x, 1024,
              "The global size to drive each kernel with. Buffers of this size "
              "are allocated and transferred for array arguments, and this many "
              "work items are instantiated.");
-DEFINE_int32(lsize, 128, "The local (work group) size. Must be <= gsize.");
+DEFINE_int32(gsize_y, 1024,
+             "The global size to drive each kernel with. Buffers of this size "
+             "are allocated and transferred for array arguments, and this many "
+             "work items are instantiated.");
+DEFINE_int32(gsize_z, 1024,
+             "The global size to drive each kernel with. Buffers of this size "
+             "are allocated and transferred for array arguments, and this many "
+             "work items are instantiated.");
+DEFINE_int32(lsize_x, 128, "The local (work group) size. Must be <= gsize.");
+DEFINE_int32(lsize_y, 128, "The local (work group) size. Must be <= gsize.");
+DEFINE_int32(lsize_z, 128, "The local (work group) size. Must be <= gsize.");
 DEFINE_string(cl_build_opt, "", "Build options passed to clBuildProgram().");
 DEFINE_int32(num_runs, 30, "The number of runs per kernel.");
 DEFINE_bool(clinfo, false, "List the available devices and exit.");
@@ -178,8 +188,12 @@ int main(int argc, char** argv) {
   gpu::cldrive::CldriveInstance* instance = instances.add_instance();
   instance->set_build_opts(FLAGS_cl_build_opt);
   auto dp = instance->add_dynamic_params();
-  dp->set_global_size_x(FLAGS_gsize);
-  dp->set_local_size_x(FLAGS_lsize);
+  dp->set_global_size_x(FLAGS_gsize_x);
+  dp->set_global_size_y(FLAGS_gsize_y);
+  dp->set_global_size_z(FLAGS_gsize_z);
+  dp->set_local_size_x(FLAGS_lsize_x);
+  dp->set_local_size_y(FLAGS_lsize_y);
+  dp->set_local_size_z(FLAGS_lsize_z);
   instance->set_min_runs_per_kernel(FLAGS_num_runs);
 
   // Parse logger flag.

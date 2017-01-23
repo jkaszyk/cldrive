@@ -53,7 +53,11 @@ message CldriveKernelInstance {
 
 message DynamicParams {
   optional int32 global_size_x = 1;
+  optional int32 global_size_y = 5;
+  optional int32 global_size_z = 6;
   optional int32 local_size_x = 2;
+  optional int32 local_size_y = 3;
+  optional int32 local_size_z = 4;
 }
 
 message CldriveKernelRun {
