@@ -196,6 +196,8 @@ gpu::libcecl::OpenClKernelInvocation KernelDriver::RunOnceOrDie(
   log.set_global_size_z(global_size_z);
   log.set_kernel_name(name_);
 
+  printf("LOCAL SIZE: %d %d %d", local_size, local_size_y, local_size_z);
+
   inputs.CopyToDevice(queue_, &profiling);
   inputs.SetAsArgs(&kernel_);
 
