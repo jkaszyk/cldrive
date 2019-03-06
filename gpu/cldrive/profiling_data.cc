@@ -20,7 +20,7 @@ namespace cldrive {
 
 phd::int64 GetElapsedNanoseconds(const cl::Event& event) {
   event.wait();
-  cl_ulong start = event.getProfilingInfo<CL_PROFILING_COMMAND_QUEUED>();
+  cl_ulong start = event.getProfilingInfo<CL_PROFILING_COMMAND_START>();
   cl_ulong end = event.getProfilingInfo<CL_PROFILING_COMMAND_END>();
   return end - start;
 }
