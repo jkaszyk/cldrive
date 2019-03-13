@@ -15,12 +15,12 @@
 // along with cldrive.  If not, see <https://www.gnu.org/licenses/>.
 #pragma once
 
+#include <iostream>
+
 #include "gpu/cldrive/csv_log.h"
 #include "gpu/cldrive/proto/cldrive.pb.h"
 
 #include "phd/status.h"
-
-#include <iostream>
 
 namespace gpu {
 namespace cldrive {
@@ -40,15 +40,19 @@ class Logger {
       const CldriveKernelRun* const run,
       const gpu::libcecl::OpenClKernelInvocation* const log);
 
+  void set_kernel_file_name(std::string s);
+  
  protected:
   const CldriveInstances* instances();
   std::ostream& ostream();
   int instance_num() const;
+  std::string get_kernel_file_name();
 
  private:
   std::ostream& ostream_;
   const CldriveInstances* const instances_;
   int instance_num_;
+  std::string kernel_file_name_;
 };
 
 // Logging interface for producing protocol buffers.

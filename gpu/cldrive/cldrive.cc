@@ -21,6 +21,9 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with cldrive.  If not, see <https://www.gnu.org/licenses/>.
+
+#include <sstream>
+
 #include "gpu/cldrive/libcldrive.h"
 
 #include "gpu/cldrive/logger.h"
@@ -34,8 +37,6 @@
 #include "boost/filesystem.hpp"
 #include "boost/filesystem/fstream.hpp"
 #include "gflags/gflags.h"
-
-#include <sstream>
 
 namespace {
 
@@ -187,6 +188,7 @@ int main(int argc, char** argv) {
 
   int instance_num = 0;
   for (auto path : SplitCommaSeparated(FLAGS_srcs)) {
+    logger->set_kernel_file_name(path.substr(path.find_last_of("/")+1));
     logger->StartNewInstance();
     instance->set_opencl_src(ReadFileOrDie(path));
 

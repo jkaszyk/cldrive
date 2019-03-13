@@ -13,11 +13,12 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with cldrive.  If not, see <https://www.gnu.org/licenses/>.
-#include "gpu/cldrive/csv_log.h"
-
-#include "phd/logging.h"
 
 #include <iostream>
+#include <string>
+
+#include "gpu/cldrive/csv_log.h"
+#include "phd/logging.h"
 
 namespace gpu {
 namespace cldrive {
@@ -57,7 +58,7 @@ std::ostream& operator<<(std::ostream& stream, const CsvLogHeader& header) {
 }
 
 std::ostream& operator<<(std::ostream& stream, const CsvLog& log) {
-  stream << log.instance_id_ << "," << log.device_ << "," << log.build_opts_
+  stream << log.kernel_file_name_ << "," << log.instance_id_ << "," << log.device_ << "," << log.build_opts_
          << ",";
   NullIfEmpty(stream, log.kernel_) << ",";
   NullIfNegative(stream, log.work_item_local_mem_size_) << ",";
@@ -70,11 +71,14 @@ std::ostream& operator<<(std::ostream& stream, const CsvLog& log) {
 }
 
 /*static*/ CsvLog CsvLog::FromProtos(
+    std::string kernel_file_name,
     int instance_id, const CldriveInstance* const instance,
     const CldriveKernelInstance* const kernel_instance,
     const CldriveKernelRun* const run,
     const gpu::libcecl::OpenClKernelInvocation* const log) {
   CsvLog csv;
+
+  csv.kernel_file_name_ = kernel_file_name;
   csv.instance_id_ = instance_id;
 
   CHECK(instance) << "CldriveInstance pointer cannot be null";

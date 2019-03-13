@@ -13,6 +13,9 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with cldrive.  If not, see <https://www.gnu.org/licenses/>.
+
+#include <string>
+
 #include "gpu/cldrive/logger.h"
 #include "phd/logging.h"
 
@@ -42,6 +45,10 @@ std::ostream& Logger::ostream() { return ostream_; }
 
 int Logger::instance_num() const { return instance_num_; }
 
+std::string Logger::get_kernel_file_name() { return kernel_file_name_; }
+
+void Logger::set_kernel_file_name(std::string s) {kernel_file_name_ = s;}
+  
 ProtocolBufferLogger::ProtocolBufferLogger(
     std::ostream& ostream, const CldriveInstances* const instances,
     bool text_format)
@@ -68,7 +75,10 @@ CsvLogger::CsvLogger(std::ostream& ostream,
     const CldriveKernelInstance* const kernel_instance,
     const CldriveKernelRun* const run,
     const gpu::libcecl::OpenClKernelInvocation* const log) {
-  ostream() << CsvLog::FromProtos(instance_num(), instance, kernel_instance,
+  ostream() << CsvLog::FromProtos(get_kernel_file_name(),
+                                  instance_num(),
+                                  instance,
+                                  kernel_instance,
                                   run, log);
   return phd::Status::OK;
 }

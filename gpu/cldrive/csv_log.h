@@ -45,6 +45,7 @@ class CsvLog {
 
   // Create a log from proto messages.
   static CsvLog FromProtos(
+      std::string kernel_file_name,
       int instance_id, const CldriveInstance* const instance,
       const CldriveKernelInstance* const kernel_instance,
       const CldriveKernelRun* const run,
@@ -56,6 +57,9 @@ class CsvLog {
  private:
   // Begin CSV columns (in order) -----------------------------------
 
+  //
+  string kernel_file_name_;
+  
   // From CldriveInstance.opencl_src field.
   int instance_id_;
 
