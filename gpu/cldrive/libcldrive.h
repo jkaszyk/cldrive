@@ -31,6 +31,7 @@ class Cldrive {
 
  private:
   void DoRunOrDie(Logger& logger);
+  void DoRunOrDieWithContext(Logger& logger, cl::Context& context);
 
   CldriveInstance* instance_;
   int instance_num_;
