@@ -91,9 +91,6 @@ void Cldrive::DoRunOrDie(Logger& logger) {
 }
 
 void Cldrive::DoRunOrDieWithContext(Logger& logger, cl::Context& context) {
-   cl::CommandQueue queue(context,
-                          /*devices=*/context.getInfo<CL_CONTEXT_DEVICES>()[0],
-                          /*properties=*/CL_QUEUE_PROFILING_ENABLE);
   cl::CommandQueue queue(context,
                          /*devices=*/context.getInfo<CL_CONTEXT_DEVICES>()[0],
                          /*properties=*/CL_QUEUE_PROFILING_ENABLE);
