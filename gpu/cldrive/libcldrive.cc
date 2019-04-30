@@ -122,6 +122,11 @@ void Cldrive::DoRunOrDieWithContext(Logger& logger, cl::Context& context) {
   }
 
   instance_->set_outcome(CldriveInstance::PASS);
+
+  for (auto kernel : kernels) {
+    cl_kernel k = *(cl_kernel*)&kernel;
+    ::clReleaseKernel(k);
+  }
 }
 
 }  // namespace cldrive
